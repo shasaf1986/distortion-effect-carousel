@@ -3,8 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "gsap": "^3.2.6",
+    "intrinsic-scale": "^3.0.4",
+    "lodash": "^4.17.15",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "resize-observer-polyfill": "^1.5.1",
+    "three": "^0.115.0"
   },
   "scripts": {
     "start": "yarn storybook",
@@ -47,7 +52,9 @@
     "@testing-library/react": "^10.0.2",
     "@testing-library/user-event": "^10.0.2",
     "@types/color": "^3.0.1",
+    "@types/intrinsic-scale": "^3.0.0",
     "@types/jest": "^25.2.1",
+    "@types/lodash": "^4.14.150",
     "@types/node": "^13.13.0",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
