@@ -1,127 +1,10 @@
 import React, { FC } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Box } from '@material-ui/core';
 import { displacementImages } from './images';
 import { useDistortionEffectCarousel } from './useDistortionEffectCarousel';
-
-const Arrow: FC = () => (
-  <div
-    style={{
-      top: '50%',
-      left: '50%',
-      position: 'absolute',
-      transform: 'translate(-25%,-50%)',
-      width: 0,
-      height: 0,
-      borderTop: '10px solid transparent',
-      borderLeft: '20px solid #333',
-      borderBottom: '10px solid transparent',
-    }}
-  />
-);
-
-const Circle: FC<{ onClick: () => void; style: React.CSSProperties }> = ({
-  onClick,
-  style,
-  children,
-}) => (
-  <div
-    onClick={onClick}
-    style={{
-      boxSizing: 'border-box',
-      border: '3px solid gray',
-      position: 'absolute',
-      backgroundColor: '#fff',
-      borderRadius: '100%',
-      opacity: '0.7',
-      cursor: 'pointer',
-      transition: 'opacity 200ms ease-in-out',
-      ...style,
-    }}
-  >
-    {children}
-  </div>
-);
-
-const ArrowButton: FC<{ isLeft: boolean; onClick: () => void }> = ({
-  isLeft,
-  onClick,
-}) => (
-  <Circle
-    onClick={onClick}
-    style={{
-      width: '64px',
-      height: '64px',
-      top: '50%',
-      left: isLeft ? 0 : '100%',
-      transform: `translate(${isLeft ? 10 : -10}px,-50%) rotate(${
-        isLeft ? 180 : 0
-      }deg)`,
-      marginLeft: isLeft ? 0 : '-64px',
-    }}
-  >
-    <Arrow />
-  </Circle>
-);
-
-const Indicator: FC<{ onClick: () => void; isActive: boolean }> = ({
-  children,
-  onClick,
-  isActive,
-}) => (
-  <div
-    style={{
-      padding: '2.5px',
-    }}
-  >
-    <Circle
-      onClick={onClick}
-      style={{
-        width: '30px',
-        height: '30px',
-        color: '#333',
-        lineHeight: '28px',
-        textAlign: 'center',
-        borderWidth: '2px',
-        position: 'static',
-        opacity: isActive ? 1 : 0.7,
-      }}
-    >
-      {children}
-    </Circle>
-  </div>
-);
-
-const Indicators: FC<{
-  images: string[];
-  onClick: (index: number) => void;
-  currentIndex: number;
-}> = ({ images, onClick, currentIndex }) => (
-  <div
-    style={{
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
-      position: 'absolute',
-      width: '100%',
-      // marginTop: '-40px',
-      transform: 'translateY(-100%)',
-      padding: '0 10px 7.5px 10px',
-      top: '100%',
-      boxSizing: 'border-box',
-    }}
-  >
-    {images.map((image, index) => (
-      <Indicator
-        isActive={currentIndex === index}
-        key={image}
-        onClick={() => {
-          onClick(index);
-        }}
-      >
-        {index + 1}
-      </Indicator>
-    ))}
-  </div>
-);
+import { ArrowButton } from './arrowButton';
+import { Indicators } from './indicators';
 
 const images = [
   'https://images.pexels.com/photos/414171/pexels-photo-414171.jpeg?cs=srgb&dl=adventure-calm-clouds-dawn-414171.jpg&fm=jpg',
@@ -153,8 +36,9 @@ const App: FC<{ aspectRatio?: number }> = () => {
         // backgroundColor: 'gray',
       }}
     >
-      <div
-        ref={ref}
+      <Box
+        {...({ ref } as any)}
+        // ref={ref}
         style={{
           boxShadow: '0 0 10px rgba(0,0,0,.3)',
           backgroundColor: 'gray',
@@ -170,7 +54,7 @@ const App: FC<{ aspectRatio?: number }> = () => {
           onClick={jump}
           images={images}
         />
-      </div>
+      </Box>
     </div>
   );
 };
