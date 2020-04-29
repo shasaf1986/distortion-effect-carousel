@@ -14,6 +14,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { fragment, vertex } from './shaders';
 import { TextureWrapper } from './textureWrapper';
 import { cover, contain } from 'intrinsic-scale';
+import './createImageBitmapPolyfill';
 
 export { Expo } from 'gsap';
 
