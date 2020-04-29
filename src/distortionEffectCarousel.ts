@@ -10,12 +10,15 @@ import {
   WebGLRenderer,
   Vector4,
   ImageBitmapLoader,
+  Cache,
 } from 'three';
 import ResizeObserver from 'resize-observer-polyfill';
 import { fragment, vertex } from './shaders';
 import { TextureWrapper } from './textureWrapper';
 import { cover, contain } from 'intrinsic-scale';
 import './createImageBitmapPolyfill';
+
+Cache.enabled = true;
 
 export { Expo } from 'gsap';
 
