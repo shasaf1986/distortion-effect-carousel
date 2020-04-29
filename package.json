@@ -2,6 +2,8 @@
   "name": "distortion-effect-carousel",
   "version": "0.1.0",
   "private": true,
+  "main": "lib/index.js",
+  "module": "esm/index.js",
   "dependencies": {
     "@types/styled-components": "^5.1.0",
     "gsap": "^3.2.6",
@@ -15,9 +17,9 @@
   },
   "scripts": {
     "start": "yarn storybook",
-    "build": "react-scripts build",
-    "test": "react-scripts test --watchAll=false",
-    "eject": "react-scripts eject",
+    "build:cjs": "rm -rf lib && tsc -project ./tsconfig.build.json -m commonjs --outDir lib",
+    "build:esm": "rm -rf esm && tsc -project ./tsconfig.build.json --outDir esm",
+    "build": "yarn build:cjs && yarn build:esm",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "lint": "yarn lint:nofix --fix",

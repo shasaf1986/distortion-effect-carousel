@@ -24,3 +24,7 @@ yarn-error.log*
 
 # graphql generated files
 generated
+
+# build
+esm
+lib
