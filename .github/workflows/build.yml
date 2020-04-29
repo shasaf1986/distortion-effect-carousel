@@ -18,6 +18,8 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
       - name: Lint
-        run: yarn lint
-      - name: build
+        run: yarn lint:nofix
+      - name: Build
         run: yarn build
+      - name: Build storybook
+        run: yarn build-storybook
