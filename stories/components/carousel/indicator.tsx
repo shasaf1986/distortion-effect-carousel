@@ -21,6 +21,7 @@ const Circle = styled.div<CircleProps>(({ isActive }) => ({
   width: '30px',
   height: '30px',
   color: '#333',
+  userSelect: 'none',
   '&:hover': {
     opacity: '1',
   },
