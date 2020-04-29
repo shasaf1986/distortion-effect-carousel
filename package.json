@@ -23,7 +23,7 @@
     "build": "yarn build:cjs && yarn build:esm",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o storybookDist -s public",
-    "deploy-storybook": "storybook-to-ghpages --out storybookDist",
+    "deploy-storybook": "storybook-to-ghpages --ci=true --out=storybookDist",
     "lint": "yarn lint:nofix --fix",
     "postlint:nofix": "yarn type-check",
     "lint:nofix": "eslint . .storybook --ext .js,.jsx,.ts,.tsx",
