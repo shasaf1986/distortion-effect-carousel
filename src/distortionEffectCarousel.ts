@@ -17,7 +17,7 @@ import { cover, contain } from 'intrinsic-scale';
 
 export type BackgroundSize = 'cover' | 'contain' | 'repeat' | 'stretch';
 
-export interface PlasticTransitionPluginOptions {
+export interface DistortionEffectCarouselPluginOptions {
   intensity?: number;
   commonAngle?: number;
   speed?: number;
@@ -31,7 +31,7 @@ export interface PlasticTransitionPluginOptions {
   resizeDebounce?: number;
 }
 
-export class PlasticTransitionPlugin {
+export class DistortionEffectCarouselPlugin {
   private readonly backgroundSize: BackgroundSize;
 
   private readonly displacmentBackgroundSize: BackgroundSize;
@@ -96,7 +96,7 @@ export class PlasticTransitionPlugin {
     backgroundSize = 'cover',
     displacmentBackgroundSize = 'cover',
     resizeDebounce = 100,
-  }: PlasticTransitionPluginOptions) {
+  }: DistortionEffectCarouselPluginOptions) {
     this.backgroundSize = backgroundSize;
     this.displacmentBackgroundSize = displacmentBackgroundSize;
     this.loader = new ImageBitmapLoader();

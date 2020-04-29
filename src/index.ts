@@ -1,2 +1,2 @@
-export * from './plugin';
+export * from './distortionEffectCarousel';
 export * from './useDistortionEffectCarousel';

@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { Box } from '@material-ui/core';
 import styled from 'styled-components';
 import { displacementImages } from './displacementImages';
-import { useDistortionEffectCarousel, BackgroundSize } from '../../../src/app';
+import { useDistortionEffectCarousel, BackgroundSize } from '../../../src';
 import { ArrowButton } from './arrowButton';
 import { Indicators } from './indicators';
 

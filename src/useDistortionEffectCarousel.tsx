@@ -6,7 +6,10 @@ import {
   useState,
   useCallback,
 } from 'react';
-import { PlasticTransitionPlugin, BackgroundSize } from './plugin';
+import {
+  DistortionEffectCarouselPlugin,
+  BackgroundSize,
+} from './distortionEffectCarousel';
 
 export interface UseDistortionEffectCarouselOptions<T> {
   ref?: MutableRefObject<T | null>;
@@ -30,7 +33,7 @@ export function useDistortionEffectCarousel<T extends HTMLElement>({
   displacmentBackgroundSize,
 }: UseDistortionEffectCarouselOptions<T>) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
-  const pluginRef = useRef<PlasticTransitionPlugin | null>(null);
+  const pluginRef = useRef<DistortionEffectCarouselPlugin | null>(null);
   const additionalRef = useRef<T | null>(null);
   const actualRef = ref || additionalRef;
   const actualImages = useDeepMemo(() => images, [images]);
@@ -43,7 +46,7 @@ export function useDistortionEffectCarousel<T extends HTMLElement>({
       return;
     }
 
-    const plugin = new PlasticTransitionPlugin({
+    const plugin = new DistortionEffectCarouselPlugin({
       initialIndex,
       images: actualImages,
       displacmentImage,
