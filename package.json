@@ -23,9 +23,9 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "lint": "yarn lint:nofix --fix",
-    "postlint": "yarn type-check",
+    "postlint:nofix": "yarn type-check",
     "lint:nofix": "eslint . .storybook --ext .js,.jsx,.ts,.tsx",
-    "type-check": "tsc",
+    "type-check": "tsc --noEmit",
     "format": "prettier --write **/*.{css,json,md}"
   },
   "husky": {
