@@ -5,6 +5,7 @@ import {
   MuiThemeProvider,
   createMuiTheme,
   CssBaseline,
+  StylesProvider,
 } from '@material-ui/core';
 
 const theme = createMuiTheme({
@@ -16,9 +17,11 @@ const theme = createMuiTheme({
 });
 addDecorator(withKnobs);
 addDecorator((storybookFn) => (
-  <MuiThemeProvider theme={theme}>
-    <CssBaseline />
-    {storybookFn()}
-  </MuiThemeProvider>
+  <StylesProvider injectFirst>
+    <MuiThemeProvider theme={theme}>
+      <CssBaseline />
+      {storybookFn()}
+    </MuiThemeProvider>
+  </StylesProvider>
 ));
 configure(require.context('../src', true, /\.stories\.tsx$/), module);

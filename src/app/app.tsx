@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Box } from '@material-ui/core';
+import styled from 'styled-components';
 import { displacementImages } from './images';
 import { useDistortionEffectCarousel } from './useDistortionEffectCarousel';
 import { ArrowButton } from './arrowButton';
@@ -19,6 +20,18 @@ const images = [
   'https://images.pexels.com/photos/462162/pexels-photo-462162.jpeg?cs=srgb&dl=aerial-view-beach-beautiful-cliff-462162.jpg&fm=jpg',
   'https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?cs=srgb&dl=alberta-amazing-attraction-banff-417074.jpg&fm=jpg',
 ];
+
+const Root = styled.div({
+  padding: '20px',
+});
+
+const CarouselWrapper = styled(Box)({
+  backgroundColor: 'gray',
+  position: 'relative',
+  width: 'calc(100vw - 40px)',
+  height: 'calc(100vh - 40px)',
+});
+
 const App: FC<{ aspectRatio?: number }> = () => {
   const { ref, currentIndex, next, prev, jump } = useDistortionEffectCarousel<
     HTMLDivElement
@@ -29,24 +42,8 @@ const App: FC<{ aspectRatio?: number }> = () => {
   console.log(currentIndex);
 
   return (
-    <div
-      style={{
-        boxSizing: 'border-box',
-        padding: '20px',
-        // backgroundColor: 'gray',
-      }}
-    >
-      <Box
-        {...({ ref } as any)}
-        // ref={ref}
-        style={{
-          boxShadow: '0 0 10px rgba(0,0,0,.3)',
-          backgroundColor: 'gray',
-          position: 'relative',
-          width: 'calc(100vw - 40px)',
-          height: 'calc(100vh - 40px)',
-        }}
-      >
+    <Root>
+      <CarouselWrapper {...({ ref } as any)} boxShadow={3}>
         <ArrowButton onClick={prev} isLeft />
         <ArrowButton onClick={next} isLeft={false} />
         <Indicators
@@ -54,8 +51,8 @@ const App: FC<{ aspectRatio?: number }> = () => {
           onClick={jump}
           images={images}
         />
-      </Box>
-    </div>
+      </CarouselWrapper>
+    </Root>
   );
 };
 

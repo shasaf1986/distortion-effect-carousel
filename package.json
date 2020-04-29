@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/styled-components": "^5.1.0",
     "gsap": "^3.2.6",
     "intrinsic-scale": "^3.0.4",
     "lodash": "^4.17.15",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "resize-observer-polyfill": "^1.5.1",
+    "styled-components": "^5.1.0",
     "three": "^0.115.0"
   },
   "scripts": {
