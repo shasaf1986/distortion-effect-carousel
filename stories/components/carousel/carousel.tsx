@@ -26,7 +26,7 @@ const Root = styled.div({
 });
 
 const CarouselWrapper = styled(Box)({
-  backgroundColor: 'gray',
+  backgroundColor: '#000',
   position: 'relative',
   overflow: 'hidden',
   width: 'calc(100vw - 40px)',

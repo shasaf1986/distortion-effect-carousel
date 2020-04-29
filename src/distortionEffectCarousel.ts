@@ -134,7 +134,6 @@ export class DistortionEffectCarouselPlugin {
       isDisplacement: true,
     });
     this.textures = [this.texture1, this.texture2, this.disp];
-    this.updateCanvasSize(this.texture1);
 
     this.mat = new ShaderMaterial({
       uniforms: {
@@ -204,6 +203,7 @@ export class DistortionEffectCarouselPlugin {
     this.renderer.setPixelRatio(2.0);
     this.renderer.setClearColor(0xffffff, 0.0);
     this.renderer.setSize(this.width, this.height);
+    this.renderer.compile(this.scene, this.camera);
 
     this.parent.appendChild(this.renderer.domElement);
     this.onResize = debounce(this.onResize, resizeDebounce);
