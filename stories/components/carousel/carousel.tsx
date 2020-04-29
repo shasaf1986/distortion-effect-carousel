@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { Box } from '@material-ui/core';
 import styled from 'styled-components';
 import { displacementImages } from './displacementImages';
-import { useDistortionEffectCarousel } from '../../../src/app/useDistortionEffectCarousel';
+import { useDistortionEffectCarousel, BackgroundSize } from '../../../src/app';
 import { ArrowButton } from './arrowButton';
 import { Indicators } from './indicators';
 
@@ -32,12 +32,22 @@ const CarouselWrapper = styled(Box)({
   height: 'calc(100vh - 40px)',
 });
 
-export const Carousel: FC = () => {
+export interface CarouselProps {
+  backgroundSize?: BackgroundSize;
+  displacmentBackgroundSize?: BackgroundSize;
+}
+
+export const Carousel: FC<CarouselProps> = ({
+  displacmentBackgroundSize,
+  backgroundSize,
+}) => {
   const { ref, currentIndex, next, prev, jump } = useDistortionEffectCarousel<
     HTMLDivElement
   >({
     displacmentImage: displacementImages[5],
     images,
+    backgroundSize,
+    displacmentBackgroundSize,
   });
 
   return (

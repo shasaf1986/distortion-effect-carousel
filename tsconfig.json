@@ -19,5 +19,5 @@
     "noEmit": true,
     "jsx": "react"
   },
-  "include": ["src", "stories"]
+  "include": ["types.d.ts", "src", "stories"]
 }
