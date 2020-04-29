@@ -24,4 +24,4 @@ addDecorator((storybookFn) => (
     </MuiThemeProvider>
   </StylesProvider>
 ));
-configure(require.context('../src', true, /\.stories\.tsx$/), module);
+configure(require.context('../stories', true, /\.stories\.tsx$/), module);

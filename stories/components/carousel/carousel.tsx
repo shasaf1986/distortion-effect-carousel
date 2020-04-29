@@ -2,8 +2,8 @@ import React, { FC } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Box } from '@material-ui/core';
 import styled from 'styled-components';
-import { displacementImages } from './images';
-import { useDistortionEffectCarousel } from './useDistortionEffectCarousel';
+import { displacementImages } from './displacementImages';
+import { useDistortionEffectCarousel } from '../../../src/app/useDistortionEffectCarousel';
 import { ArrowButton } from './arrowButton';
 import { Indicators } from './indicators';
 
@@ -32,14 +32,13 @@ const CarouselWrapper = styled(Box)({
   height: 'calc(100vh - 40px)',
 });
 
-const App: FC<{ aspectRatio?: number }> = () => {
+export const Carousel: FC = () => {
   const { ref, currentIndex, next, prev, jump } = useDistortionEffectCarousel<
     HTMLDivElement
   >({
     displacmentImage: displacementImages[5],
     images,
   });
-  console.log(currentIndex);
 
   return (
     <Root>
@@ -55,5 +54,3 @@ const App: FC<{ aspectRatio?: number }> = () => {
     </Root>
   );
 };
-
-export default App;
