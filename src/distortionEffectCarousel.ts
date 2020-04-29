@@ -1,5 +1,6 @@
 import { TweenMax, Expo } from 'gsap';
-import { debounce, find } from 'lodash';
+import debounce from 'lodash/debounce';
+import find from 'lodash/find';
 import {
   ShaderMaterial,
   PlaneBufferGeometry,
