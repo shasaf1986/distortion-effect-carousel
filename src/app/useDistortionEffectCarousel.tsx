@@ -39,6 +39,9 @@ export function useDistortionEffectCarousel<T extends HTMLElement>({
     if (!actualRef.current) {
       return;
     }
+    if (actualImages.length === 0) {
+      return;
+    }
 
     const plugin = new PlasticTransitionPlugin({
       initialIndex,
@@ -49,6 +52,7 @@ export function useDistortionEffectCarousel<T extends HTMLElement>({
       displacmentBackgroundSize,
     });
     pluginRef.current = plugin;
+    setCurrentIndex(plugin.getCurrentIndex());
 
     return () => {
       plugin.dispose();
@@ -65,26 +69,29 @@ export function useDistortionEffectCarousel<T extends HTMLElement>({
 
   const next = useCallback(() => {
     const { current: plugin } = pluginRef;
-    if (plugin) {
-      plugin.next();
-      setCurrentIndex(plugin.getCurrentIndex());
+    if (!plugin) {
+      return;
     }
+    plugin.next();
+    setCurrentIndex(plugin.getCurrentIndex());
   }, []);
 
   const prev = useCallback(() => {
     const { current: plugin } = pluginRef;
-    if (plugin) {
-      plugin.prev();
-      setCurrentIndex(plugin.getCurrentIndex());
+    if (!plugin) {
+      return;
     }
+    plugin.prev();
+    setCurrentIndex(plugin.getCurrentIndex());
   }, []);
 
   const jump = useCallback((index: number) => {
     const { current: plugin } = pluginRef;
-    if (plugin) {
-      plugin.jump(index);
-      setCurrentIndex(plugin.getCurrentIndex());
+    if (!plugin) {
+      return;
     }
+    plugin.jump(index);
+    setCurrentIndex(plugin.getCurrentIndex());
   }, []);
 
   return useMemo(
