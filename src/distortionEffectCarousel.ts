@@ -15,13 +15,17 @@ import { fragment, vertex } from './shaders';
 import { TextureWrapper } from './textureWrapper';
 import { cover, contain } from 'intrinsic-scale';
 
+export { Expo } from 'gsap';
+
 export type BackgroundSize = 'cover' | 'contain' | 'repeat' | 'stretch';
+
+export type EaseFunction = gsap.EaseFunction;
 
 export interface DistortionEffectCarouselPluginOptions {
   intensity?: number;
   commonAngle?: number;
   speed?: number;
-  easing?: gsap.EaseFunction;
+  easing?: EaseFunction;
   parent: HTMLElement;
   initialIndex?: number;
   backgroundSize?: BackgroundSize;

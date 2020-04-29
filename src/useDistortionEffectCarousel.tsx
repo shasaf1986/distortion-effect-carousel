@@ -2,26 +2,18 @@ import {
   useRef,
   useMemo,
   MutableRefObject,
-  useEffect,
   useState,
   useCallback,
 } from 'react';
+import { useDeepCompareEffect } from 'react-use';
 import {
   DistortionEffectCarouselPlugin,
-  BackgroundSize,
+  DistortionEffectCarouselPluginOptions,
 } from './distortionEffectCarousel';
 
-export interface UseDistortionEffectCarouselOptions<T> {
+export interface UseDistortionEffectCarouselOptions<T>
+  extends Omit<DistortionEffectCarouselPluginOptions, 'parent'> {
   ref?: MutableRefObject<T | null>;
-  images: string[];
-  displacmentImage: string;
-  initialIndex?: number;
-  backgroundSize?: BackgroundSize;
-  displacmentBackgroundSize?: BackgroundSize;
-}
-
-function useDeepMemo<T>(factory: () => T, deps?: any[]) {
-  return useMemo(factory, [JSON.stringify(deps)]);
 }
 
 export function useDistortionEffectCarousel<T extends HTMLElement>({
@@ -31,30 +23,40 @@ export function useDistortionEffectCarousel<T extends HTMLElement>({
   ref,
   backgroundSize,
   displacmentBackgroundSize,
+  commonAngle,
+  easing,
+  intensity,
+  resizeDebounce,
+  speed,
 }: UseDistortionEffectCarouselOptions<T>) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const pluginRef = useRef<DistortionEffectCarouselPlugin | null>(null);
   const additionalRef = useRef<T | null>(null);
   const actualRef = ref || additionalRef;
-  const actualImages = useDeepMemo(() => images, [images]);
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (!actualRef.current) {
       return;
     }
-    if (actualImages.length === 0) {
+    if (images.length === 0) {
       return;
     }
 
     const plugin = new DistortionEffectCarouselPlugin({
       initialIndex,
-      images: actualImages,
+      images,
       displacmentImage,
       parent: actualRef.current,
       backgroundSize,
       displacmentBackgroundSize,
+      commonAngle,
+      easing,
+      intensity,
+      resizeDebounce,
+      speed,
     });
     pluginRef.current = plugin;
+
     setCurrentIndex(plugin.getCurrentIndex());
 
     return () => {
@@ -64,10 +66,15 @@ export function useDistortionEffectCarousel<T extends HTMLElement>({
   }, [
     actualRef,
     displacmentImage,
-    actualImages,
+    images,
     initialIndex,
     backgroundSize,
     displacmentBackgroundSize,
+    commonAngle,
+    easing,
+    intensity,
+    resizeDebounce,
+    speed,
   ]);
 
   const next = useCallback(() => {
