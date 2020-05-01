@@ -26,6 +26,8 @@ export type BackgroundSize = 'cover' | 'contain' | 'repeat' | 'stretch';
 
 export type EaseFunction = gsap.EaseFunction;
 
+export type onImageLoaded = (index: number) => void;
+
 export interface DistortionEffectCarouselPluginOptions {
   intensity?: number;
   commonAngle?: number;
@@ -38,6 +40,7 @@ export interface DistortionEffectCarouselPluginOptions {
   images: string[];
   displacmentImage: string;
   resizeDebounce?: number;
+  onImageLoaded?: onImageLoaded;
 }
 
 export class DistortionEffectCarouselPlugin {
@@ -81,6 +84,8 @@ export class DistortionEffectCarouselPlugin {
 
   private readonly angle2: number;
 
+  private readonly onImageLoaded?: onImageLoaded;
+
   private isDisposed: boolean = false;
 
   private showFirstImage: boolean = true;
@@ -104,8 +109,10 @@ export class DistortionEffectCarouselPlugin {
     displacmentImage,
     backgroundSize = 'cover',
     displacmentBackgroundSize = 'cover',
-    resizeDebounce = 100,
+    resizeDebounce = 250,
+    onImageLoaded,
   }: DistortionEffectCarouselPluginOptions) {
+    this.onImageLoaded = onImageLoaded;
     this.backgroundSize = backgroundSize;
     this.displacmentBackgroundSize = displacmentBackgroundSize;
     this.loader = new ImageBitmapLoader();
@@ -221,31 +228,40 @@ export class DistortionEffectCarouselPlugin {
   }
 
   private loadImage(src: string, isDisplacement: boolean, index: number = -1) {
-    this.loader.load(src, (image) => {
-      if (isDisplacement) {
-        this.displacmentImage = image;
-      } else {
-        this.images[index] = image;
+    this.loader.load(
+      src,
+      (image) => {
+        if (this.isDisposed) {
+          return;
+        }
+        if (isDisplacement) {
+          this.displacmentImage = image;
+        } else {
+          this.images[index] = image;
+        }
+        const textureWrapper = find(this.textures, { isDisplacement, index });
+        if (textureWrapper) {
+          this.updateCanvasSize(textureWrapper);
+          if (!isDisplacement && index === this.currentIndex) {
+            this.render();
+          }
+        }
+        if (!isDisplacement && this.onImageLoaded) {
+          this.onImageLoaded(index);
+        }
+      },
+      () => undefined,
+      () => {
+        console.warn('faild to load image');
+        if (!isDisplacement && this.onImageLoaded) {
+          this.onImageLoaded(index);
+        }
       }
-      const textureWrapper = find(this.textures, { isDisplacement, index });
-      if (textureWrapper) {
-        this.updateCanvasSize(textureWrapper);
-        this.render();
-      }
-    });
+    );
   }
 
-  private render = (withRequestAnimationFrame: boolean = true) => {
-    if (!withRequestAnimationFrame) {
-      this.renderer.render(this.scene, this.camera);
-      return;
-    }
-    window.requestAnimationFrame(() => {
-      if (this.isDisposed) {
-        return;
-      }
-      this.renderer.render(this.scene, this.camera);
-    });
+  private render = () => {
+    this.renderer.render(this.scene, this.camera);
   };
 
   private createVector() {
@@ -347,7 +363,7 @@ export class DistortionEffectCarouselPlugin {
     this.render();
   };
 
-  private transition(index: number, isNext: boolean) {
+  private slide(index: number, isNext: boolean) {
     this.currentIndex = index;
     const { uniforms } = this.mat;
     this.showFirstImage = !this.showFirstImage;
@@ -368,24 +384,19 @@ export class DistortionEffectCarouselPlugin {
     this.tween = TweenMax.to(uniforms.dispFactor, this.speed, {
       value: this.showFirstImage ? 0 : 1,
       ease: this.easing,
-      // gsap already add animation frame
-      onUpdate: () => {
-        this.render(false);
-      },
-      onComplete: () => {
-        this.render(false);
-      },
+      onUpdate: this.render,
+      onComplete: this.render,
     });
   }
 
   next() {
     const newIndex = this.calculateNextIndex(this.currentIndex);
-    this.transition(newIndex, true);
+    this.slide(newIndex, true);
   }
 
   prev() {
     const newIndex = this.calculatePrevIndex(this.currentIndex);
-    this.transition(newIndex, false);
+    this.slide(newIndex, false);
   }
 
   jump(index: number) {
@@ -398,7 +409,7 @@ export class DistortionEffectCarouselPlugin {
     }
 
     const isNext = index > this.currentIndex;
-    this.transition(index, isNext);
+    this.slide(index, isNext);
   }
 
   getCurrentIndex() {

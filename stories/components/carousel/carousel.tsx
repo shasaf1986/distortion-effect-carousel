@@ -25,13 +25,25 @@ const Root = styled.div({
   padding: '20px',
 });
 
-const CarouselWrapper = styled(Box)({
+const Frame = styled(Box)({
   backgroundColor: '#000',
   position: 'relative',
   overflow: 'hidden',
   width: 'calc(100vw - 40px)',
   height: 'calc(100vh - 40px)',
 });
+
+interface CarouselWrapperProps {
+  show: boolean;
+}
+
+const CarouselWrapper = styled.div<CarouselWrapperProps>(({ show }) => ({
+  position: 'absolute',
+  width: '100%',
+  height: '100%',
+  opacity: show ? '1' : '0',
+  transition: 'opacity 400ms ease-in',
+}));
 
 export interface CarouselProps {
   backgroundSize?: BackgroundSize;
@@ -42,26 +54,35 @@ export const Carousel: FC<CarouselProps> = ({
   displacmentBackgroundSize,
   backgroundSize,
 }) => {
-  const { ref, currentIndex, next, prev, jump } = useDistortionEffectCarousel<
-    HTMLDivElement
-  >({
+  const {
+    ref,
+    currentIndex,
+    next,
+    prev,
+    jump,
+    loadedImages,
+  } = useDistortionEffectCarousel<HTMLDivElement>({
     displacmentImage: displacementImages[5],
     images,
     backgroundSize,
     displacmentBackgroundSize,
   });
 
+  const show = loadedImages[0] === true;
+
   return (
     <Root>
-      <CarouselWrapper {...({ ref } as any)} boxShadow={3}>
-        <ArrowButton onClick={prev} isLeft />
-        <ArrowButton onClick={next} isLeft={false} />
-        <Indicators
-          currentIndex={currentIndex}
-          onClick={jump}
-          images={images}
-        />
-      </CarouselWrapper>
+      <Frame boxShadow={3}>
+        <CarouselWrapper show={show} {...({ ref } as any)} boxShadow={3}>
+          <ArrowButton onClick={prev} isLeft />
+          <ArrowButton onClick={next} isLeft={false} />
+          <Indicators
+            currentIndex={currentIndex}
+            onClick={jump}
+            images={images}
+          />
+        </CarouselWrapper>
+      </Frame>
     </Root>
   );
 };

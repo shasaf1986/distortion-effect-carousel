@@ -30,6 +30,9 @@ export function useDistortionEffectCarousel<T extends HTMLElement>({
   speed,
 }: UseDistortionEffectCarouselOptions<T>) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [loadedImages, setLoadedImages] = useState<
+    Partial<Record<number, boolean>>
+  >({});
   const pluginRef = useRef<DistortionEffectCarouselPlugin | null>(null);
   const additionalRef = useRef<T | null>(null);
   const actualRef = ref || additionalRef;
@@ -41,6 +44,13 @@ export function useDistortionEffectCarousel<T extends HTMLElement>({
     if (images.length === 0) {
       return;
     }
+
+    const onImageLoaded = (index: number) => {
+      setLoadedImages((prev) => ({
+        ...prev,
+        [index]: true,
+      }));
+    };
 
     const plugin = new DistortionEffectCarouselPlugin({
       initialIndex,
@@ -54,10 +64,12 @@ export function useDistortionEffectCarousel<T extends HTMLElement>({
       intensity,
       resizeDebounce,
       speed,
+      onImageLoaded,
     });
     pluginRef.current = plugin;
 
     setCurrentIndex(plugin.getCurrentIndex());
+    setLoadedImages({});
 
     return () => {
       plugin.dispose();
@@ -111,7 +123,8 @@ export function useDistortionEffectCarousel<T extends HTMLElement>({
       prev,
       jump,
       ref: actualRef,
+      loadedImages,
     }),
-    [actualRef, currentIndex, jump, next, prev]
+    [actualRef, currentIndex, jump, loadedImages, next, prev]
   );
 }
