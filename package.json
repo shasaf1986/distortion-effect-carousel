@@ -16,7 +16,7 @@
     "postlint:nofix": "yarn type-check",
     "lint:nofix": "eslint . .storybook --ext .js,.jsx,.ts,.tsx",
     "type-check": "tsc --noEmit",
-    "format": "prettier --write **/*.{css,json,md}"
+    "format": "prettier --write **/*.{css,json,md,yml}"
   },
   "husky": {
     "hooks": {
