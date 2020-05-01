@@ -27,7 +27,6 @@ jobs:
 
       - name: Install dependencies
         run: yarn --frozen-lockfile
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
 
       - name: Lint
         run: yarn lint:nofix
