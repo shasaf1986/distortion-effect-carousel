@@ -1,7 +1,7 @@
 {
   "name": "distortion-effect-carousel",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "main": "lib/index.js",
   "module": "esm/index.js",
   "scripts": {
@@ -17,7 +17,8 @@
     "lint:nofix": "eslint . .storybook --ext .js,.jsx,.ts,.tsx",
     "type-check": "tsc --noEmit",
     "format": "prettier --write **/*.{css,json,md,yml}",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "release": "semantic-release --dry-run  --ci"
   },
   "husky": {
     "hooks": {
@@ -76,6 +77,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
+    "semantic-release": "^17.0.7",
     "styled-components": "^5.1.0",
     "typescript": "~3.8.3"
   },
