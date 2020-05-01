@@ -1,10 +1,6 @@
 name: Build CI
 
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -15,15 +11,17 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "12.x"
-      - name: Print ref
-        run: echo ${{github.ref}}
       - name: Install dependencies
         run: yarn --frozen-lockfile
       - name: Lint
         run: yarn lint:nofix
       - name: Build
         run: yarn build
+      - name: Build storybook
+        run: yarn build-storybook
+        if: github.ref != 'refs/heads/master'
       - name: Deploy storybook
         env:
           GH_TOKEN: ${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}
         run: yarn deploy-storybook
+        if: github.ref == 'refs/heads/master'
