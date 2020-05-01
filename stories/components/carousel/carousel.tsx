@@ -48,11 +48,13 @@ const CarouselWrapper = styled.div<CarouselWrapperProps>(({ show }) => ({
 export interface CarouselProps {
   backgroundSize?: BackgroundSize;
   displacmentBackgroundSize?: BackgroundSize;
+  displacment: number;
 }
 
 export const Carousel: FC<CarouselProps> = ({
   displacmentBackgroundSize,
   backgroundSize,
+  displacment,
 }) => {
   const {
     ref,
@@ -62,7 +64,7 @@ export const Carousel: FC<CarouselProps> = ({
     jump,
     loadedImages,
   } = useDistortionEffectCarousel<HTMLDivElement>({
-    displacmentImage: displacementImages[5],
+    displacmentImage: displacementImages[displacment],
     images,
     backgroundSize,
     displacmentBackgroundSize,
