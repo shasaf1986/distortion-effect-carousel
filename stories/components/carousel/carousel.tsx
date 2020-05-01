@@ -58,6 +58,8 @@ export interface CarouselProps
     | 'intensity'
     | 'resizeDebounce'
     | 'easing'
+    | 'angle1'
+    | 'angle2'
   > {
   displacment: number;
 }
@@ -71,6 +73,8 @@ export const Carousel: FC<CarouselProps> = ({
   intensity,
   resizeDebounce,
   easing,
+  angle1,
+  angle2,
 }) => {
   const {
     ref,
@@ -89,6 +93,8 @@ export const Carousel: FC<CarouselProps> = ({
     intensity,
     resizeDebounce,
     easing,
+    angle1,
+    angle2,
   });
 
   const show = loadedImages[0] === true;

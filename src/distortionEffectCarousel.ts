@@ -29,6 +29,8 @@ export type onImageLoaded = (index: number) => void;
 export interface DistortionEffectCarouselPluginOptions {
   intensity?: number;
   commonAngle?: number;
+  angle1?: number;
+  angle2?: number;
   speed?: number;
   easing?: Easing;
   parent: HTMLElement;
@@ -99,6 +101,8 @@ export class DistortionEffectCarouselPlugin {
   constructor({
     intensity = 1,
     commonAngle = Math.PI / 4,
+    angle1,
+    angle2,
     speed = 1.6,
     easing = 'easeOut',
     parent,
@@ -119,8 +123,8 @@ export class DistortionEffectCarouselPlugin {
     this.displacmentImage = null;
     this.loader.crossOrigin = '';
     this.displacmentImage = null;
-    this.angle1 = commonAngle;
-    this.angle2 = -commonAngle * 3;
+    this.angle1 = typeof angle1 === 'number' ? angle1 : commonAngle;
+    this.angle2 = typeof angle2 === 'number' ? angle2 : -commonAngle * 3;
     this.speed = speed;
     this.easing = Expo[easing];
     this.parent = parent;

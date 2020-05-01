@@ -14,9 +14,11 @@ storiesOf('useDistortionEffectCarousel', module).add('default', () => (
       },
       'easeOut'
     )}
+    commonAngle={number('commonAngle', Math.PI / 4)}
+    angle1={number('angle1', Math.PI / 4)}
+    angle2={number('angle2', -3 * (Math.PI / 4))}
     resizeDebounce={number('resizeDebounce', 250)}
     intensity={number('intensity', 1)}
-    commonAngle={number('commonAngle', Math.PI / 4)}
     speed={number('speed', 1.6)}
     displacment={select(
       'displacment',

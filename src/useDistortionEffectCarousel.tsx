@@ -31,6 +31,8 @@ export function useDistortionEffectCarousel<
   intensity,
   resizeDebounce,
   speed,
+  angle1,
+  angle2,
 }: UseDistortionEffectCarouselOptions<T>) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [loadedImages, setLoadedImages] = useState<
@@ -68,6 +70,8 @@ export function useDistortionEffectCarousel<
       resizeDebounce,
       speed,
       onImageLoaded,
+      angle1,
+      angle2,
     });
     pluginRef.current = plugin;
 
@@ -90,6 +94,8 @@ export function useDistortionEffectCarousel<
     intensity,
     resizeDebounce,
     speed,
+    angle1,
+    angle2,
   ]);
 
   const next = useCallback(() => {
