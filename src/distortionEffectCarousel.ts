@@ -20,11 +20,9 @@ import './createImageBitmapPolyfill';
 
 Cache.enabled = true;
 
-export { Expo } from 'gsap';
-
 export type BackgroundSize = 'cover' | 'contain' | 'repeat' | 'stretch';
 
-export type EaseFunction = gsap.EaseFunction;
+export type Easing = keyof typeof Expo;
 
 export type onImageLoaded = (index: number) => void;
 
@@ -32,7 +30,7 @@ export interface DistortionEffectCarouselPluginOptions {
   intensity?: number;
   commonAngle?: number;
   speed?: number;
-  easing?: EaseFunction;
+  easing?: Easing;
   parent: HTMLElement;
   initialIndex?: number;
   backgroundSize?: BackgroundSize;
@@ -102,7 +100,7 @@ export class DistortionEffectCarouselPlugin {
     intensity = 1,
     commonAngle = Math.PI / 4,
     speed = 1.6,
-    easing = Expo.easeOut,
+    easing = 'easeOut',
     parent,
     initialIndex = 0,
     images,
@@ -124,7 +122,7 @@ export class DistortionEffectCarouselPlugin {
     this.angle1 = commonAngle;
     this.angle2 = -commonAngle * 3;
     this.speed = speed;
-    this.easing = easing;
+    this.easing = Expo[easing];
     this.parent = parent;
     this.width = parent.offsetWidth;
     this.height = parent.offsetHeight;

@@ -11,12 +11,15 @@ import {
   DistortionEffectCarouselPluginOptions,
 } from './distortionEffectCarousel';
 
-export interface UseDistortionEffectCarouselOptions<T>
-  extends Omit<DistortionEffectCarouselPluginOptions, 'parent'> {
+export interface UseDistortionEffectCarouselOptions<
+  T extends HTMLElement = HTMLElement
+> extends Omit<DistortionEffectCarouselPluginOptions, 'parent'> {
   ref?: MutableRefObject<T | null>;
 }
 
-export function useDistortionEffectCarousel<T extends HTMLElement>({
+export function useDistortionEffectCarousel<
+  T extends HTMLElement = HTMLElement
+>({
   images,
   displacmentImage,
   initialIndex = 0,

@@ -1,9 +1,11 @@
 import React, { FC } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Box } from '@material-ui/core';
 import styled from 'styled-components';
 import { displacementImages } from './displacementImages';
-import { useDistortionEffectCarousel, BackgroundSize } from '../../../src';
+import {
+  useDistortionEffectCarousel,
+  UseDistortionEffectCarouselOptions,
+} from '../../../src';
 import { ArrowButton } from './arrowButton';
 import { Indicators } from './indicators';
 
@@ -41,20 +43,34 @@ const CarouselWrapper = styled.div<CarouselWrapperProps>(({ show }) => ({
   position: 'absolute',
   width: '100%',
   height: '100%',
+  pointerEvents: show ? undefined : 'none',
   opacity: show ? '1' : '0',
   transition: 'opacity 400ms ease-in',
 }));
 
-export interface CarouselProps {
-  backgroundSize?: BackgroundSize;
-  displacmentBackgroundSize?: BackgroundSize;
+export interface CarouselProps
+  extends Pick<
+    UseDistortionEffectCarouselOptions,
+    | 'displacmentBackgroundSize'
+    | 'backgroundSize'
+    | 'commonAngle'
+    | 'speed'
+    | 'intensity'
+    | 'resizeDebounce'
+    | 'easing'
+  > {
   displacment: number;
 }
 
 export const Carousel: FC<CarouselProps> = ({
+  displacment,
   displacmentBackgroundSize,
   backgroundSize,
-  displacment,
+  commonAngle,
+  speed,
+  intensity,
+  resizeDebounce,
+  easing,
 }) => {
   const {
     ref,
@@ -63,11 +79,16 @@ export const Carousel: FC<CarouselProps> = ({
     prev,
     jump,
     loadedImages,
-  } = useDistortionEffectCarousel<HTMLDivElement>({
+  } = useDistortionEffectCarousel({
     displacmentImage: displacementImages[displacment],
     images,
-    backgroundSize,
     displacmentBackgroundSize,
+    backgroundSize,
+    commonAngle,
+    speed,
+    intensity,
+    resizeDebounce,
+    easing,
   });
 
   const show = loadedImages[0] === true;

@@ -1,10 +1,23 @@
 import { storiesOf } from '@storybook/react';
-import { select } from '@storybook/addon-knobs';
+import { select, number } from '@storybook/addon-knobs';
 import React from 'react';
 import { Carousel, CarouselProps } from './components';
 
 storiesOf('useDistortionEffectCarousel', module).add('default', () => (
   <Carousel
+    easing={select(
+      'easing',
+      {
+        easeOut: 'easeOut',
+        easeInOut: 'easeInOut',
+        easeIn: 'easeIn',
+      },
+      'easeOut'
+    )}
+    resizeDebounce={number('resizeDebounce', 250)}
+    intensity={number('intensity', 1)}
+    commonAngle={number('commonAngle', Math.PI / 4)}
+    speed={number('speed', 1.6)}
     displacment={select(
       'displacment',
       Array.from({ length: 16 }, () => null).reduce(
