@@ -9,11 +9,13 @@ Inspired by [hover-effect](https://github.com/robin-dela/hover-effect).
 
 ### Install
 
+With yarn.
+
 ```
 yarn add @shasaf1986/distortion-effect-carousel
 ```
 
-Or with NPM.
+With NPM.
 
 ```
 npm install @shasaf1986/distortion-effect-carousel
