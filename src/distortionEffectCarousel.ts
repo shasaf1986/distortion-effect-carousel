@@ -41,6 +41,7 @@ export interface DistortionEffectCarouselPluginOptions {
   displacmentImage: string;
   resizeDebounce?: number;
   onImageLoaded?: onImageLoaded;
+  dpr?: number;
 }
 
 export class DistortionEffectCarouselPlugin {
@@ -84,6 +85,8 @@ export class DistortionEffectCarouselPlugin {
 
   private readonly angle2: number;
 
+  private readonly dpr: number;
+
   private readonly onImageLoaded?: onImageLoaded;
 
   private isDisposed: boolean = false;
@@ -113,7 +116,9 @@ export class DistortionEffectCarouselPlugin {
     displacmentBackgroundSize = 'cover',
     resizeDebounce = 250,
     onImageLoaded,
+    dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1,
   }: DistortionEffectCarouselPluginOptions) {
+    this.dpr = dpr;
     this.onImageLoaded = onImageLoaded;
     this.backgroundSize = backgroundSize;
     this.displacmentBackgroundSize = displacmentBackgroundSize;
@@ -181,10 +186,6 @@ export class DistortionEffectCarouselPlugin {
           type: 'vec4',
           value: this.createVector(),
         },
-        dpr: {
-          type: 'f',
-          value: window.devicePixelRatio,
-        },
       },
       vertexShader: vertex,
       fragmentShader: fragment,
@@ -211,10 +212,9 @@ export class DistortionEffectCarouselPlugin {
     this.camera.position.z = 1;
 
     this.renderer = new WebGLRenderer({
-      antialias: true,
       alpha: true,
     });
-    this.renderer.setPixelRatio(2.0);
+    this.renderer.setPixelRatio(this.dpr);
     this.renderer.setClearColor(0xffffff, 0.0);
     this.renderer.setSize(this.width, this.height);
     this.renderer.compile(this.scene, this.camera);
@@ -278,14 +278,11 @@ export class DistortionEffectCarouselPlugin {
       return;
     }
 
-    // dpr fix for canvas blur issue
-    const dpr = window.devicePixelRatio;
     const canvas: HTMLCanvasElement =
       texture.image || document.createElement('canvas');
-    canvas.width = this.width * dpr;
-    canvas.height = this.height * dpr;
+    canvas.width = this.width * this.dpr;
+    canvas.height = this.height * this.dpr;
 
-    // const imageCoverSize = this.calcualteImageCoverSize(image);
     const context = canvas.getContext('2d');
     if (!context) {
       console.warn('canvas context is not defined');
@@ -314,7 +311,13 @@ export class DistortionEffectCarouselPlugin {
           image.width,
           image.height
         );
-        context.drawImage(image, x * dpr, y * dpr, width * dpr, height * dpr);
+        context.drawImage(
+          image,
+          x * this.dpr,
+          y * this.dpr,
+          width * this.dpr,
+          height * this.dpr
+        );
       }
     }
     texture.image = canvas;

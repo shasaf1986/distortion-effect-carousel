@@ -9,7 +9,6 @@ export const vertex = `
 export const fragment = `
     varying vec2 vUv;
     uniform float dispFactor;
-    uniform float dpr;
     uniform sampler2D disp;
     uniform sampler2D texture1;
     uniform sampler2D texture2;
