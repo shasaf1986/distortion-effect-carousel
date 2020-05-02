@@ -73,11 +73,11 @@ const MyCarousel: React.FC<MyCarouselProps> = ({
 
 ### Return value
 
-| Name           | Type                                                       | Description                                                  |
-| -------------- | ---------------------------------------------------------- | ------------------------------------------------------------ |
-| `next`         | `() => void`                                               | Transition to next image.                                    |
-| `prev`         | `() => void`                                               | Transition to previous image.                                |
-| `jump`         | `(index: number) => void`                                  | Transition to previous image.                                |
-| `currentIndex` | `number`                                                   | The current index of carousel                                |
-| `ref`          | `MutableRefObject<T extends HTMLElement = HTMLDivElement>` | The ref of the parent DOM element                            |
-| `loadedImages` | `Partial<Record<number, boolean>>`                         | An object that represents the loaded images by their indexes |
+| Name           | Type                                                       | Description                                                   |
+| -------------- | ---------------------------------------------------------- | ------------------------------------------------------------- |
+| `next`         | `() => void`                                               | Transition to next image.                                     |
+| `prev`         | `() => void`                                               | Transition to previous image.                                 |
+| `jump`         | `(index: number) => void`                                  | Transition to specific image.                                 |
+| `currentIndex` | `number`                                                   | The current index of carousel.                                |
+| `ref`          | `MutableRefObject<T extends HTMLElement = HTMLDivElement>` | The ref of the parent DOM element.                            |
+| `loadedImages` | `Partial<Record<number, boolean>>`                         | An object that represents the loaded images by their indexes. |
