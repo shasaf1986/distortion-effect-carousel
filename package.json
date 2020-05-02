@@ -25,6 +25,13 @@
       "pre-commit": "lint-staged"
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shasaf1986/distortion-effect-carousel"
+  },
+  "bugs": {
+    "url": "https://github.com/shasaf1986/distortion-effect-carousel/issues"
+  },
   "dependencies": {
     "gsap": "^3.2.6",
     "intrinsic-scale": "^3.0.4",
