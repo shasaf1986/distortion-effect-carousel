@@ -98,11 +98,10 @@ export const Carousel: FC<CarouselProps> = ({
   });
 
   const show = loadedImages[0] === true;
-
   return (
     <Root>
       <Frame boxShadow={3}>
-        <CarouselWrapper show={show} {...({ ref } as any)} boxShadow={3}>
+        <CarouselWrapper ref={ref} show={show}>
           <ArrowButton onClick={prev} isLeft />
           <ArrowButton onClick={next} isLeft={false} />
           <Indicators

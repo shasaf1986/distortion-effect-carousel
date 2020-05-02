@@ -12,18 +12,33 @@ import {
 } from './distortionEffectCarousel';
 
 export interface UseDistortionEffectCarouselOptions<
-  T extends HTMLElement = HTMLElement
-> extends Omit<DistortionEffectCarouselPluginOptions, 'parent'> {
+  T extends HTMLElement = HTMLDivElement
+>
+  extends Pick<
+    DistortionEffectCarouselPluginOptions,
+    | 'images'
+    | 'displacmentImage'
+    | 'initialIndex'
+    | 'backgroundSize'
+    | 'displacmentBackgroundSize'
+    | 'commonAngle'
+    | 'easing'
+    | 'intensity'
+    | 'resizeDebounce'
+    | 'speed'
+    | 'angle1'
+    | 'angle2'
+  > {
   ref?: MutableRefObject<T | null>;
 }
 
 export function useDistortionEffectCarousel<
-  T extends HTMLElement = HTMLElement
+  T extends HTMLElement = HTMLDivElement
 >({
+  ref,
   images,
   displacmentImage,
   initialIndex = 0,
-  ref,
   backgroundSize,
   displacmentBackgroundSize,
   commonAngle,
