@@ -190,7 +190,7 @@ export class DistortionEffectCarouselPlugin {
       vertexShader: vertex,
       fragmentShader: fragment,
       transparent: true,
-      opacity: 1.0,
+      opacity: 1,
     });
 
     this.geometry = new PlaneBufferGeometry(this.width, this.height, 1);
@@ -208,7 +208,6 @@ export class DistortionEffectCarouselPlugin {
       1,
       1000
     );
-
     this.camera.position.z = 1;
 
     this.renderer = new WebGLRenderer({
@@ -234,6 +233,7 @@ export class DistortionEffectCarouselPlugin {
     this.loader.load(
       src,
       (image) => {
+        // async callback, check if disposed
         if (this.isDisposed) {
           return;
         }
@@ -243,6 +243,7 @@ export class DistortionEffectCarouselPlugin {
         if (textureWrapper) {
           this.attachImage(textureWrapper);
           if (!isDisplacement && index === this.currentIndex) {
+            // render only if this is the current image
             this.render();
           }
         }
@@ -253,6 +254,7 @@ export class DistortionEffectCarouselPlugin {
       () => undefined,
       () => {
         console.warn('faild to load image');
+        // TODO: handle error
         if (!isDisplacement && this.onImageLoaded) {
           this.onImageLoaded(index);
         }
@@ -270,6 +272,7 @@ export class DistortionEffectCarouselPlugin {
 
   private drawImage({ canvas, image, isDisplacement }: ImageWrapper) {
     if (!image) {
+      // image not loaded yet
       return;
     }
 
@@ -346,6 +349,7 @@ export class DistortionEffectCarouselPlugin {
   }
 
   private onResize = () => {
+    // onResize is an async callback, check if disposed
     if (this.isDisposed) {
       return;
     }
@@ -358,6 +362,7 @@ export class DistortionEffectCarouselPlugin {
     this.width = newWidth;
     this.height = newHeight;
     const { uniforms } = this.mat;
+    // draw all images with new size
     this.drawImage(this.displacmentImage);
     this.images.forEach((image) => {
       this.drawImage(image);

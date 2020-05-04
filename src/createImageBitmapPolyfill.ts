@@ -1,4 +1,4 @@
-// based on https://gist.github.com/MonsieurV/fb640c29084c171b4444184858a91bc7
+// safari doesn't support createImageBitmap, based on https://gist.github.com/MonsieurV/fb640c29084c171b4444184858a91bc7
 if (typeof window !== 'undefined' && !('createImageBitmap' in window)) {
   // @ts-ignore
   window.createImageBitmap = (data: any) =>
