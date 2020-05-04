@@ -17,6 +17,7 @@ import { fragment, vertex } from './shaders';
 import { TextureWrapper } from './textureWrapper';
 import { cover, contain } from 'intrinsic-scale';
 import './createImageBitmapPolyfill';
+import { ImageWrapper } from './imageWrapper';
 
 Cache.enabled = true;
 
@@ -49,9 +50,9 @@ export class DistortionEffectCarouselPlugin {
 
   private readonly displacmentBackgroundSize: BackgroundSize;
 
-  private readonly images: (ImageBitmap | null)[];
+  private readonly images: ImageWrapper[];
 
-  private displacmentImage: ImageBitmap | null;
+  private displacmentImage: ImageWrapper;
 
   private readonly loader: ImageBitmapLoader;
 
@@ -123,11 +124,13 @@ export class DistortionEffectCarouselPlugin {
     this.backgroundSize = backgroundSize;
     this.displacmentBackgroundSize = displacmentBackgroundSize;
     this.loader = new ImageBitmapLoader();
-    this.displacmentImage = null;
-    this.images = Array.from({ length: images.length }, () => null);
-    this.displacmentImage = null;
+    this.displacmentImage = new ImageWrapper({
+      isDisplacement: true,
+    });
+    this.images = images.map(
+      (_, index) => new ImageWrapper({ isDisplacement: false, index })
+    );
     this.loader.crossOrigin = '';
-    this.displacmentImage = null;
     this.angle1 = typeof angle1 === 'number' ? angle1 : commonAngle;
     this.angle2 = typeof angle2 === 'number' ? angle2 : -commonAngle * 3;
     this.speed = speed;
@@ -223,27 +226,25 @@ export class DistortionEffectCarouselPlugin {
     this.onResize = debounce(this.onResize, resizeDebounce);
     this.resizeObserver = new ResizeObserver(this.onResize);
     this.resizeObserver.observe(this.parent);
-    this.loadImage(displacmentImage, true);
+    this.loadImage(displacmentImage, this.displacmentImage);
     images.forEach((src, index) => {
-      this.loadImage(src, false, index);
+      this.loadImage(src, this.images[index]);
     });
   }
 
-  private loadImage(src: string, isDisplacement: boolean, index: number = -1) {
+  private loadImage(src: string, imageWrapper: ImageWrapper) {
+    const { isDisplacement, index } = imageWrapper;
     this.loader.load(
       src,
       (image) => {
         if (this.isDisposed) {
           return;
         }
-        if (isDisplacement) {
-          this.displacmentImage = image;
-        } else {
-          this.images[index] = image;
-        }
+        imageWrapper.image = image;
+        this.drawImage(imageWrapper);
         const textureWrapper = find(this.textures, { isDisplacement, index });
         if (textureWrapper) {
-          this.updateCanvasSize(textureWrapper);
+          this.attachImage(textureWrapper);
           if (!isDisplacement && index === this.currentIndex) {
             this.render();
           }
@@ -270,19 +271,13 @@ export class DistortionEffectCarouselPlugin {
     return new Vector4(this.width, this.height, 1, 1);
   }
 
-  private updateCanvasSize(textureWrapper: TextureWrapper) {
-    const { texture, index, isDisplacement } = textureWrapper;
-    const image = isDisplacement ? this.displacmentImage : this.images[index];
-    // image not loaded yet
+  private drawImage({ canvas, image, isDisplacement }: ImageWrapper) {
     if (!image) {
       return;
     }
 
-    const canvas: HTMLCanvasElement =
-      texture.image || document.createElement('canvas');
     canvas.width = this.width * this.dpr;
     canvas.height = this.height * this.dpr;
-
     const context = canvas.getContext('2d');
     if (!context) {
       console.warn('canvas context is not defined');
@@ -320,6 +315,13 @@ export class DistortionEffectCarouselPlugin {
         );
       }
     }
+  }
+
+  private attachImage(textureWrapper: TextureWrapper) {
+    const { texture, index, isDisplacement } = textureWrapper;
+    const { canvas } = isDisplacement
+      ? this.displacmentImage
+      : this.images[index];
     texture.image = canvas;
     texture.needsUpdate = true;
   }
@@ -359,8 +361,14 @@ export class DistortionEffectCarouselPlugin {
     this.width = newWidth;
     this.height = newHeight;
     const { uniforms } = this.mat;
-    this.textures.forEach((textureWrapper) => {
-      this.updateCanvasSize(textureWrapper);
+    this.drawImage(this.displacmentImage);
+    this.images.forEach((image) => {
+      this.drawImage(image);
+    });
+    this.textures.forEach(({ texture }) => {
+      if (texture.image) {
+        texture.needsUpdate = true;
+      }
     });
     uniforms.res.value = this.createVector();
 
@@ -384,7 +392,7 @@ export class DistortionEffectCarouselPlugin {
       uniforms.angle2.value = this.angle1;
     }
 
-    this.updateCanvasSize(newTextureWrapper);
+    this.attachImage(newTextureWrapper);
     this.tween?.kill();
     this.tween = TweenMax.to(uniforms.dispFactor, this.speed, {
       value: this.showFirstImage ? 0 : 1,

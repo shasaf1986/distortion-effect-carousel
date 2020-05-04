@@ -3,7 +3,7 @@ if (typeof window !== 'undefined' && !('createImageBitmap' in window)) {
   // @ts-ignore
   window.createImageBitmap = (data: any) =>
     new Promise((resolve, reject) => {
-      let dataURL;
+      let dataURL: any;
       if (data instanceof Blob) {
         dataURL = URL.createObjectURL(data);
       } else if (data instanceof ImageData) {
