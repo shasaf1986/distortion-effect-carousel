@@ -9,7 +9,7 @@ import { useDeepCompareEffect } from 'react-use';
 import {
   DistortionEffectCarouselPlugin,
   DistortionEffectCarouselPluginOptions,
-} from './distortionEffectCarousel';
+} from './distortionEffectCarouselPlugin';
 
 export interface UseDistortionEffectCarouselOptions<
   T extends HTMLElement = HTMLDivElement

@@ -10,7 +10,6 @@ import {
   WebGLRenderer,
   Vector4,
   ImageBitmapLoader,
-  Cache,
 } from 'three';
 import ResizeObserver from 'resize-observer-polyfill';
 import { fragment, vertex } from './shaders';
@@ -18,8 +17,6 @@ import { TextureWrapper } from './textureWrapper';
 import { cover, contain } from 'intrinsic-scale';
 import './createImageBitmapPolyfill';
 import { ImageWrapper } from './imageWrapper';
-
-Cache.enabled = true;
 
 export type BackgroundSize = 'cover' | 'contain' | 'repeat' | 'stretch';
 
