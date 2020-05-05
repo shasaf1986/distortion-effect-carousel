@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/shasaf1986/distortion-effect-carousel/compare/v1.0.0...v1.0.1) (2020-05-05)
+
+
+### Bug Fixes
+
+* **fix release:** replaced package name ([c1a25fe](https://github.com/shasaf1986/distortion-effect-carousel/commit/c1a25fe0c18247adc2b321d05b6cd5f758b6c8da))
+
 # 1.0.0 (2020-05-05)
 
 
