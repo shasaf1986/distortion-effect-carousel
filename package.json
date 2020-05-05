@@ -1,7 +1,11 @@
 {
-  "name": "distortion-effect-carousel",
+  "name": "@shasaf1986/distortion-effect-carousel",
   "version": "0.1.0",
-  "private": false,
+  "files": [
+    "lib",
+    "esm",
+    "CHANGELOG.md"
+  ],
   "main": "lib/index.js",
   "module": "esm/index.js",
   "scripts": {
