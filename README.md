@@ -12,20 +12,20 @@ Inspired by [hover-effect](https://github.com/robin-dela/hover-effect).
 With yarn.
 
 ```
-yarn add @shasaf1986/distortion-effect-carousel
+yarn add distortion-effect-carousel
 ```
 
 With NPM.
 
 ```
-npm install @shasaf1986/distortion-effect-carousel
+npm install distortion-effect-carousel
 ```
 
 ## Basic usage
 
 ```jsx
 import React from 'react';
-import { useDistortionEffectCarousel } from '@shasaf1986/distortion-effect-carousel';
+import { useDistortionEffectCarousel } from 'distortion-effect-carousel';
 
 interface MyCarouselProps {
   images: string[];
