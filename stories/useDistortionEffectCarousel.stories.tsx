@@ -3,7 +3,7 @@ import { select, number } from '@storybook/addon-knobs';
 import React from 'react';
 import { Carousel, CarouselProps } from './components';
 
-storiesOf('useDistortionEffectCarouse', module).add('default', () => (
+storiesOf('useDistortionEffectCarousel', module).add('default', () => (
   <Carousel
     easing={select(
       'easing',
