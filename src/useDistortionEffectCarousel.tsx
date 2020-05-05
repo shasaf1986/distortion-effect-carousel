@@ -50,15 +50,19 @@ export function useDistortionEffectCarousel<
   angle2,
 }: UseDistortionEffectCarouselOptions<T>) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  // loadedImages[0] === true, indicates that the first image is loaded
   const [loadedImages, setLoadedImages] = useState<
     Partial<Record<number, boolean>>
   >({});
   const pluginRef = useRef<DistortionEffectCarouselPlugin | null>(null);
-  const additionalRef = useRef<T | null>(null);
-  const actualRef = ref || additionalRef;
+  const defaultRef = useRef<T | null>(null);
+  const actualRef = ref || defaultRef;
 
+  // deep compare becuase the images could pass as a new array every render
   useDeepCompareEffect(() => {
+    // in this time, the ref should be populated
     if (!actualRef.current) {
+      console.warn('ref is missing');
       return;
     }
     if (images.length === 0) {
@@ -89,8 +93,9 @@ export function useDistortionEffectCarousel<
       angle2,
     });
     pluginRef.current = plugin;
-
+    // this is necessary if the plugin was created before or the initialIndex is not valid
     setCurrentIndex(plugin.getCurrentIndex());
+    // this is necessary if the plugin was created before
     setLoadedImages({});
 
     return () => {
