@@ -22,7 +22,7 @@
     "type-check": "tsc --noEmit",
     "format": "prettier --write **/*.{css,json,md,yml}",
     "commit": "git-cz",
-    "release": "semantic-release --dry-run"
+    "release": "semantic-release"
   },
   "release": {
     "branches": [
