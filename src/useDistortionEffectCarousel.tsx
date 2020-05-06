@@ -28,6 +28,7 @@ export interface UseDistortionEffectCarouselOptions<
     | 'speed'
     | 'angle1'
     | 'angle2'
+    | 'dpr'
   > {
   ref?: MutableRefObject<T | null>;
 }
@@ -48,6 +49,7 @@ export function useDistortionEffectCarousel<
   speed,
   angle1,
   angle2,
+  dpr,
 }: UseDistortionEffectCarouselOptions<T>) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   // loadedImages[0] === true, indicates that the first image is loaded
@@ -91,6 +93,7 @@ export function useDistortionEffectCarousel<
       onImageLoaded,
       angle1,
       angle2,
+      dpr,
     });
     pluginRef.current = plugin;
     // this is necessary if the plugin was created before or the initialIndex is not valid
@@ -116,6 +119,7 @@ export function useDistortionEffectCarousel<
     speed,
     angle1,
     angle2,
+    dpr,
   ]);
 
   const next = useCallback(() => {

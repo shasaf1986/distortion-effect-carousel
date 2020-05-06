@@ -23,6 +23,9 @@
     "commit": "git-cz",
     "release": "semantic-release"
   },
+  "lint-staged": {
+    "*.+(js|jsx|ts|tsx)": ["yarn lint"]
+  },
   "release": {
     "branches": [
       "master"
