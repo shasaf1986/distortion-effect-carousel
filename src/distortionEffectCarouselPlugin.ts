@@ -267,7 +267,12 @@ export class DistortionEffectCarouselPlugin {
   };
 
   private createVector() {
-    return new Vector4(this.width, this.height, 1, 1);
+    return new Vector4(
+      this.width * (this.dpr / 2),
+      this.height * (this.dpr / 2),
+      1,
+      1
+    );
   }
 
   private drawImage({ canvas, image, isDisplacement }: ImageWrapper) {
