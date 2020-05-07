@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/shasaf1986/distortion-effect-carousel/compare/v1.0.3...v1.1.0) (2020-05-07)
+
+
+### Features
+
+* **release:** deploy to npm ([a148e21](https://github.com/shasaf1986/distortion-effect-carousel/commit/a148e21abc9dae50115c9a225aba7acbff674171))
+
 ## [1.0.3](https://github.com/shasaf1986/distortion-effect-carousel/compare/v1.0.2...v1.0.3) (2020-05-05)
 
 

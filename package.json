@@ -1,6 +1,6 @@
 {
   "name": "distortion-effect-carousel",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "files": [
     "lib",
     "esm"
@@ -24,7 +24,9 @@
     "release": "semantic-release"
   },
   "lint-staged": {
-    "*.+(js|jsx|ts|tsx)": ["yarn lint"]
+    "*.+(js|jsx|ts|tsx)": [
+      "yarn lint"
+    ]
   },
   "release": {
     "branches": [
