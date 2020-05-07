@@ -1,6 +1,6 @@
 # Distortion Effect Carousel
 
-HTML carousel with distortion effect for React and Vanilla.
+HTML carousel with distortion effect for React and Vanilla Javascript.\
 Inspired by [hover-effect](https://github.com/robin-dela/hover-effect).
 
 [DEMO](https://shasaf1986.github.io/distortion-effect-carousel)
