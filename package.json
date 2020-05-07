@@ -6,6 +6,7 @@
     "esm"
   ],
   "main": "lib/index.js",
+  "license": "MIT",
   "module": "esm/index.js",
   "scripts": {
     "start": "yarn storybook",
