@@ -76,14 +76,7 @@ export const Carousel: FC<CarouselProps> = ({
   angle1,
   angle2,
 }) => {
-  const {
-    ref,
-    currentIndex,
-    next,
-    prev,
-    jump,
-    loadedImages,
-  } = useDistortionEffectCarousel({
+  const options: UseDistortionEffectCarouselOptions = {
     displacmentImage: displacementImages[displacment],
     images,
     displacmentBackgroundSize,
@@ -95,7 +88,15 @@ export const Carousel: FC<CarouselProps> = ({
     easing,
     angle1,
     angle2,
-  });
+  };
+  const {
+    ref,
+    currentIndex,
+    next,
+    prev,
+    jump,
+    loadedImages,
+  } = useDistortionEffectCarousel(options);
 
   const show = loadedImages[0] === true;
   return (
