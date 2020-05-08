@@ -6,6 +6,7 @@ Inspired by [hover-effect](https://github.com/robin-dela/hover-effect).
 [DEMO](https://shasaf1986.github.io/distortion-effect-carousel)
 
 ![Build CI](https://github.com/shasaf1986/distortion-effect-carousel/workflows/Build%20CI/badge.svg)
+![npm](https://img.shields.io/npm/v/distortion-effect-carousel)
 
 ### Install
 
