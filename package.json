@@ -62,7 +62,7 @@
     "lodash": "^4.17.15",
     "react-use": "^14.2.0",
     "resize-observer-polyfill": "^1.5.1",
-    "three": "^0.116.1"
+    "three": "^0.137.0"
   },
   "peerDependencies": {
     "react": "^16.8.0",
